@@ -1,0 +1,24 @@
+name: Unity-iPhone
+options:
+  bundleIdPrefix: com.example
+configs:
+  Debug: debug
+  Release: release
+  ReleaseForProfiling: release
+  ReleaseForRunning: release
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: "13.0"
+    DEVELOPMENT_TEAM: ABCDE12345
+targets:
+  Unity-iPhone:
+    type: application
+    platform: iOS
+    sources: [Classes]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.game
+        INFOPLIST_FILE: Info.plist
+        CODE_SIGN_ENTITLEMENTS: Unity-iPhone/Unity-iPhone.entitlements
+
+

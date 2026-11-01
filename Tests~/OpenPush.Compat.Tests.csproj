@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Separate output paths: several projects share the Tests~ directory, and the
+         default obj/bin would collide. -->
+    <BaseOutputPath>bin/compat/</BaseOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <!-- OpenPushSettingsSnapshot fields are assigned by the Unity settings reader (Runtime/Unity),
+         which this project does not compile; the compiler reports that as CS0649. -->
+    <NoWarn>$(NoWarn);CS0649</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- The real Core, facade and compat assembly over the fake platform. The facade is nothing
+         but forwarding, so a signature drift in Runtime/Facade or Runtime/Compat breaks this
+         compile, and the tests prove each alias lands on the same platform call. -->
+    <Compile Include="../Runtime/Core/**/*.cs" />
+    <Compile Include="../Runtime/Contract/**/*.cs" />
+    <Compile Include="../Runtime/Events/**/*.cs" />
+    <Compile Include="../Runtime/Stub/**/*.cs" />
+    <Compile Include="../Runtime/Facade/**/*.cs" />
+    <Compile Include="../Runtime/Migration/**/*.cs" />
+    <Compile Include="../Runtime/Compat/**/*.cs" />
+    <Compile Include="Support/FakePlatform.cs" />
+    <Compile Include="Support/QueueDispatcher.cs" />
+    <Compile Include="Support/FacadeTestBase.cs" />
+    <Compile Include="OneSignalAliasTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+</Project>

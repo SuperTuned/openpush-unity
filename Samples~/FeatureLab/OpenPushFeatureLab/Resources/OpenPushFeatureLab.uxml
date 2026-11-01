@@ -1,0 +1,195 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="app" class="app theme-light">
+        <ui:VisualElement class="navigation-bar">
+            <ui:Label name="navigation-title" text="Status" class="navigation-title" />
+            <ui:Button name="settings-button" class="navigation-settings-button" tooltip="Feature Lab settings" />
+        </ui:VisualElement>
+
+        <ui:ScrollView name="content-scroll" class="content-scroll" mode="Vertical">
+            <ui:VisualElement name="status-page" class="page">
+                <ui:VisualElement class="intro-row">
+                    <ui:VisualElement class="intro-mark"><ui:VisualElement class="intro-dot" /></ui:VisualElement>
+                    <ui:VisualElement class="intro-copy">
+                        <ui:Label text="A runnable map of the Unity SDK—state first, actions second, receipts visible." class="body muted wrap" />
+                        <ui:Label name="status-mode-badge" text="DEMO · SDK WRITES SIMULATED" class="mode-badge" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="consent-gate" class="panel consent-gate hidden">
+                    <ui:Label name="gate-title" text="SDK WAITING · HOST CONSENT" class="eyebrow warning" />
+                    <ui:Label name="gate-message" text="Live SDK actions are paused. Grant consent to initialize OpenPush for this process." class="body muted wrap" />
+                    <ui:Button name="grant-consent-gate" text="Grant consent &amp; start SDK" class="primary-button" />
+                </ui:VisualElement>
+                <ui:VisualElement class="metric-grid">
+                    <ui:VisualElement class="metric"><ui:Label text="PERMISSION" class="eyebrow" /><ui:Label name="metric-permission" text="Not determined" class="metric-value" /><ui:Label text="OS authorization cache" class="caption muted" /></ui:VisualElement>
+                    <ui:VisualElement class="metric"><ui:Label text="PUSH" class="eyebrow" /><ui:Label name="metric-push" text="Opted out" class="metric-value" /><ui:Label name="metric-push-detail" text="notification_types 0" class="caption muted" /></ui:VisualElement>
+                    <ui:VisualElement class="metric"><ui:Label text="IDENTITY" class="eyebrow" /><ui:Label name="metric-identity" text="Anonymous" class="metric-value" /><ui:Label text="install-level user" class="caption muted" /></ui:VisualElement>
+                    <ui:VisualElement class="metric"><ui:Label text="SDK" class="eyebrow" /><ui:Label name="metric-sdk" text="—" class="metric-value" /><ui:Label name="metric-sdk-detail" text="simulated service writes" class="caption muted" /></ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Notifications" class="panel-title" /><ui:Label text="PERMISSION + SUBSCRIPTION" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Authorization" class="body muted" /><ui:Label name="authorization-value" text="Not determined" class="code" /></ui:VisualElement>
+                        <ui:Toggle name="push-toggle" text="Push enabled" class="lab-toggle" />
+                        <ui:Label text="Opting out preserves the provider token while excluding this subscription from delivery." class="caption muted wrap" />
+                        <ui:Button name="permission-button" text="Request notification permission" class="primary-button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="PNS examples" class="panel-title" /><ui:Label text="5 HOST FIXTURES" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:Label text="Exercise foreground and click delegates with provider-shaped fixtures. Native scheduling and presentation remain host-owned." class="body muted wrap" />
+                        <ui:Label name="pns-last-request" text="Last request · None" class="code muted" />
+                        <ui:VisualElement name="pns-fixture-list" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Privacy consent" class="panel-title" /><ui:Label text="HOST-APP GATE" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:Label text="OpenPush does not own a consent API. This sample stores the host decision and can delay SDK initialization." class="body muted wrap" />
+                        <ui:Toggle name="consent-required-toggle" text="Require consent before SDK start" class="lab-toggle" />
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Saved decision" class="body muted" /><ui:Label name="consent-value" text="Not required" class="code" /></ui:VisualElement>
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="SDK startup" class="body muted" /><ui:Label name="startup-value" text="Demo runtime" class="code" /></ui:VisualElement>
+                        <ui:Button name="consent-action" text="Grant consent &amp; start SDK" class="primary-button" />
+                        <ui:Label name="consent-relaunch-note" text="Resetting consent cannot undo data already sent. Relaunch to test the waiting state." class="caption warning wrap hidden" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Device registration" class="panel-title" /><ui:Label name="registration-mode" text="DEMO" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Subscription ID" class="body muted" /><ui:Label name="subscription-id" text="—" class="code" /></ui:VisualElement>
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Provider token" class="body muted" /><ui:Label name="provider-token" text="—" class="code" /></ui:VisualElement>
+                        <ui:Label text="The native SDK obtains the push token (FCM on Android, the APNs token Unity receives on iOS) and registers this device." class="caption muted wrap" />
+                        <ui:Button name="refresh-button" text="Refresh SDK snapshot" class="secondary-button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Delivery receipts" class="panel-title" /><ui:Label text="HOST + SDK PATH" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Received" class="body muted" /><ui:Label text="ProcessForeground posts automatically" class="code" /></ui:VisualElement>
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Clicked" class="body muted" /><ui:Label text="ProcessClick posts automatically" class="code" /></ui:VisualElement>
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Confirmed" class="body muted" /><ui:Label text="Host posts after actual presentation" class="code" /></ui:VisualElement>
+                        <ui:Label text="iOS Notification Service Extension processing is not part of the Unity package. A native host extension must apply action categories and forward background delivery receipts." class="caption muted wrap" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="user-page" class="page hidden">
+                <ui:VisualElement class="intro-row"><ui:VisualElement class="intro-mark"><ui:VisualElement class="intro-dot" /></ui:VisualElement><ui:VisualElement class="intro-copy"><ui:Label text="Attach this install to your user model, then shape targeting data with tags and aliases." class="body muted wrap" /><ui:Label name="user-mode-badge" text="DEMO · SDK WRITES SIMULATED" class="mode-badge" /></ui:VisualElement></ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Identity" class="panel-title" /><ui:Label name="identity-note" text="ANONYMOUS" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Current user" class="body muted" /><ui:Label name="current-user" text="Anonymous install" class="code" /></ui:VisualElement>
+                        <ui:TextField name="external-id" label="EXTERNAL ID" value="demo-user" class="lab-field" />
+                        <ui:VisualElement class="button-row"><ui:Button name="login-button" text="Log in" class="primary-button flex" /><ui:Button name="logout-button" text="Log out" class="danger-button flex" /></ui:VisualElement>
+                        <ui:Label text="Generate identity verification hashes on your server—never in the app." class="caption muted wrap" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Tags" class="panel-title" /><ui:Label text="TARGETING STATE" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body"><ui:VisualElement name="tag-list" /><ui:Button name="add-tag-button" text="Add tag" class="secondary-button" /></ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Aliases" class="panel-title" /><ui:Label text="SESSION VIEW" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body"><ui:VisualElement name="alias-list" /><ui:Button name="add-alias-button" text="Add alias" class="secondary-button" /><ui:Label text="Aliases add lookup keys; they do not merge users. The SDK exposes writes, so this list tracks only this lab session." class="caption muted wrap" /></ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="events-page" class="page hidden">
+                <ui:VisualElement class="intro-row"><ui:VisualElement class="intro-mark"><ui:VisualElement class="intro-dot" /></ui:VisualElement><ui:VisualElement class="intro-copy"><ui:Label text="Every SDK observer reports here, in order, with enough context to verify your integration." class="body muted wrap" /><ui:Label name="events-mode-badge" text="DEMO · SDK WRITES SIMULATED" class="mode-badge" /></ui:VisualElement></ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Listener controls" class="panel-title" /><ui:Label text="4 OBSERVERS" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:Toggle name="suppress-toggle" text="Suppress foreground presentation" class="lab-toggle" />
+                        <ui:Label text="When enabled, the foreground listener requests PreventDefault while still recording the event." class="caption muted wrap" />
+                        <ui:Button name="event-foreground" text="Preview foreground listener" class="primary-button" />
+                        <ui:Button name="event-click" text="Preview click listener" class="secondary-button" />
+                        <ui:VisualElement class="button-row"><ui:Button name="event-permission" text="Permission observer" class="secondary-button flex" /><ui:Button name="event-subscription" text="Subscription observer" class="secondary-button flex" /></ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="inapp" class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="In-app messages" class="panel-title" /><ui:Label text="FETCH · TRIGGERS · LIFECYCLE" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:Label text="The Android and iOS players render block and HTML messages in a native web view over the game. The Editor and the desktop players preview block layouts with UI Toolkit and skip HTML messages with a log line, leaving them eligible for the device presenter." class="body muted wrap" />
+                        <ui:VisualElement class="button-row"><ui:Button name="inapp-fetch" text="Fetch now" class="primary-button flex" /><ui:Button name="inapp-reset" text="Reset display state" class="secondary-button flex" /></ui:VisualElement>
+                        <ui:Label text="Fetching is throttled to one request every 30 seconds. Resetting forgets dismissals and redisplay counters so a campaign can be seen again." class="caption muted wrap" />
+                        <ui:VisualElement class="button-row"><ui:TextField name="inapp-trigger-key" label="KEY" value="level" class="lab-field flex" /><ui:TextField name="inapp-trigger-value" label="VALUE" value="12" class="lab-field flex" /></ui:VisualElement>
+                        <ui:Button name="inapp-add-trigger" text="Add trigger" class="secondary-button" />
+                        <ui:Label text="Every lifecycle phase the SDK reports — willDisplay, didDisplay, willDismiss, didDismiss — is appended to the event stream below." class="caption muted wrap" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Event stream" class="panel-title" /><ui:Label name="event-count" text="0 RETAINED" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body"><ui:VisualElement name="event-list" /><ui:Button name="clear-events-button" text="Clear event stream" class="danger-button" /></ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="activity-page" class="page hidden">
+                <ui:VisualElement class="intro-row"><ui:VisualElement class="intro-mark"><ui:VisualElement class="intro-dot" /></ui:VisualElement><ui:VisualElement class="intro-copy"><ui:Label name="activity-summary" text="Inspect the platform-specific live notification surface supported by this Unity host." class="body muted wrap" /><ui:Label name="activity-mode-badge" text="DEMO · SDK WRITES SIMULATED" class="mode-badge" /></ui:VisualElement></ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label name="activity-panel-title" text="Live notification preview" class="panel-title" /><ui:Label name="activity-platform-note" text="EDITOR PREVIEW" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:VisualElement class="activity-preview"><ui:VisualElement class="telemetry-row"><ui:Label text="DELIVERY" class="eyebrow accent" /><ui:Label text="PREVIEW" class="eyebrow" /></ui:VisualElement><ui:Label text="Order on the way" class="panel-title" /><ui:VisualElement class="telemetry-row"><ui:Label text="ORD-1234" class="code muted" /><ui:Label text="12 min" class="metric-value" /></ui:VisualElement><ui:VisualElement class="progress-track"><ui:VisualElement class="progress-fill" /></ui:VisualElement></ui:VisualElement>
+                        <ui:VisualElement class="telemetry-row"><ui:Label text="Capability" class="body muted" /><ui:Label name="live-update-capability" text="Device build required" class="code" /></ui:VisualElement>
+                        <ui:Button name="preview-live-update" text="Run preview fixture" class="primary-button" />
+                        <ui:Button name="open-live-settings" text="Open promotion settings" class="secondary-button" />
+                        <ui:Label name="activity-platform-help" text="Build for Android to test Live Updates or iOS to start an ActivityKit Live Activity." class="caption muted wrap" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel">
+                    <ui:VisualElement class="panel-heading"><ui:Label text="Platform support" class="panel-title" /><ui:Label text="HONEST CAPABILITIES" class="eyebrow" /></ui:VisualElement>
+                    <ui:VisualElement class="panel-body">
+                        <ui:VisualElement class="support-row"><ui:Label text="Android Live Updates" class="body" /><ui:Label text="SDK SUPPORTED" class="support-good" /></ui:VisualElement>
+                        <ui:VisualElement class="support-row"><ui:Label text="iOS Live Activities" class="body" /><ui:Label text="SDK SUPPORTED" class="support-good" /></ui:VisualElement>
+                        <ui:Label text="The Unity SDK exposes Android Live Updates and iOS Live Activities. The iOS export can inject the default ActivityKit widget and forward its tokens to OpenPush." class="caption muted wrap" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:ScrollView>
+
+        <ui:VisualElement class="tab-bar">
+            <ui:Button name="tab-status" text="Status" class="tab-button selected" />
+            <ui:Button name="tab-user" text="User" class="tab-button" />
+            <ui:Button name="tab-events" text="Events" class="tab-button" />
+            <ui:Button name="tab-activity" text="Activity" class="tab-button" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="modal-scrim" class="modal-scrim hidden">
+            <ui:VisualElement name="settings-modal" class="modal-card hidden">
+                <ui:VisualElement class="modal-heading"><ui:Label text="Feature Lab" class="panel-title" /><ui:Button name="settings-close" text="Done" class="text-button" /></ui:VisualElement>
+                <ui:Label text="RUNTIME" class="eyebrow" /><ui:VisualElement class="segment"><ui:Button name="mode-demo" text="Demo" class="segment-button selected" /><ui:Button name="mode-live" text="Live" class="segment-button" /></ui:VisualElement>
+                <ui:Label text="APPEARANCE" class="eyebrow" /><ui:VisualElement class="segment"><ui:Button name="appearance-system" text="System" class="segment-button selected" /><ui:Button name="appearance-light" text="Light" class="segment-button" /><ui:Button name="appearance-dark" text="Dark" class="segment-button" /></ui:VisualElement>
+                <ui:Label text="LIVE CONFIGURATION" class="eyebrow" /><ui:TextField name="app-id-field" label="App ID" class="lab-field" /><ui:TextField name="sdk-key-field" label="Public SDK key" class="lab-field" is-password-field="true" />
+                <ui:Label text="These public integration values are saved locally for this sample. Never paste a device credential or server secret here." class="caption muted wrap" />
+                <ui:Button name="save-settings" text="Save configuration" class="primary-button" />
+                <ui:VisualElement class="telemetry-row"><ui:Label text="SDK version" class="body muted" /><ui:Label name="settings-sdk-version" text="—" class="code" /></ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="custom-modal" class="modal-card hidden">
+                <ui:VisualElement class="modal-heading"><ui:Label text="Custom Notification" class="panel-title" /><ui:Button name="custom-cancel" text="Cancel" class="text-button" /></ui:VisualElement>
+                <ui:TextField name="custom-title" label="TITLE" value="Feature unlocked" class="lab-field" />
+                <ui:TextField name="custom-description" label="DESCRIPTION" value="OpenPush can carry app-defined data with every notification." multiline="true" class="lab-field text-area" />
+                <ui:Label text="CUSTOM DATA" class="eyebrow" /><ui:VisualElement class="button-row"><ui:TextField name="custom-key" label="Key" value="feature" class="lab-field flex" /><ui:TextField name="custom-value" label="Value" value="inbox" class="lab-field flex" /></ui:VisualElement>
+                <ui:Label name="custom-validation" text="Enter a title, description, key, and value." class="caption warning hidden" />
+                <ui:Button name="custom-preview" text="Preview custom fixture" class="primary-button" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="key-value-modal" class="modal-card hidden">
+                <ui:VisualElement class="modal-heading"><ui:Label name="key-value-title" text="Add Tag" class="panel-title" /><ui:Button name="key-value-cancel" text="Cancel" class="text-button" /></ui:VisualElement>
+                <ui:TextField name="key-field" label="KEY" class="lab-field" /><ui:TextField name="value-field" label="VALUE" class="lab-field" />
+                <ui:Label name="key-value-validation" text="Both fields are required." class="caption warning hidden" />
+                <ui:Button name="key-value-save" text="Add" class="primary-button" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="preview-modal" class="modal-card preview-card hidden">
+                <ui:VisualElement class="modal-heading"><ui:Label name="preview-kind" text="SIMPLE FIXTURE" class="eyebrow accent" /><ui:Button name="preview-close" text="Done" class="text-button" /></ui:VisualElement>
+                <ui:VisualElement name="preview-image" class="feature-image hidden" />
+                <ui:Label name="preview-title" text="Welcome to OpenPush" class="preview-title" />
+                <ui:Label name="preview-description" text="A simple foreground notification fixture." class="body muted wrap" />
+                <ui:VisualElement class="payload-box"><ui:Label text="HOST PAYLOAD" class="eyebrow" /><ui:Label name="preview-data" text="feature = inbox" class="code wrap" /></ui:VisualElement>
+                <ui:Label name="preview-note" text="This invokes the SDK foreground listener. Native scheduling and presentation belong to the platform host." class="caption muted wrap" />
+                <ui:Button name="preview-forward" text="Forward to foreground listener" class="primary-button" />
+                <ui:Button name="preview-click" text="Simulate notification click" class="secondary-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

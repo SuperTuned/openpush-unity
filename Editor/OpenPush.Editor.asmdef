@@ -1,0 +1,8 @@
+{
+  "name": "OpenPush.Editor",
+  "rootNamespace": "OpenPushSDK.Editor",
+  "references": ["OpenPush.Runtime"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "noEngineReferences": false
+}

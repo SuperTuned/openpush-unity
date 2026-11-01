@@ -1,0 +1,39 @@
+# Exceptions for scripts/check-public-content.sh, one per line:
+#   <path glob> <pattern id> [<line regex>] -- <reason>
+# Keep this list as short as possible. An entry that matches nothing fails the check.
+
+# The ignore rules that keep working notes and agent state out of the repository.
+.gitignore internal-doc ^(PRODUCT|DESIGN)\.md$ -- ignore rules for local working notes
+.gitignore agent-path ^\.(impeccable|claude|superpowers)/$ -- ignore rules for local tool state
+
+# NOTICE and the migration guide carry the trademark and non-affiliation notice.
+NOTICE onesignal -- trademark and non-affiliation notice
+NOTICE onesignal-inc -- trademark and non-affiliation notice
+MIGRATING-FROM-ONESIGNAL.md onesignal -- migration guide for the compatibility layer
+MIGRATING-FROM-ONESIGNAL.md com-onesignal -- migration guide names the previous SDK's package
+MIGRATING-FROM-ONESIGNAL.md onesignal-inc -- trademark notice in the migration guide
+
+# The opt-in compatibility assembly and its tests.
+Runtime/Compat/** onesignal -- the compatibility facade provides the previous SDK's API names for migrating apps
+Tests~/OneSignalAliasTests.cs onesignal -- tests of the compatibility facade
+
+# Migration detection: the previous SDK's extension, App Group, packages and icon names that setup
+# finds and offers to reuse or remove; its tests and the exported-project fixtures they read.
+Editor/Compat/** onesignal -- migration detection of the previous SDK
+Editor/Compat/** com-onesignal -- migration detection of the previous SDK's packages
+Tests~/Support/IosExportFixture.cs onesignal -- names of the previous SDK in the export fixture
+Tests~/Editor/OpenPushExtensionSigningTests.cs onesignal \.OneSignalNotificationServiceExtension|\.onesignal" -- signing test of the previous SDK's extension
+Tests~/Fixtures/ios/ManualSigning/** onesignal -- exported-project fixture with the previous SDK installed
+Tests~/Fixtures/ios/VendorExport/** onesignal -- exported-project fixture with the previous SDK installed
+
+# The vendored native SDKs: the iOS compatibility Live Activity attributes, and the Android core's
+# migration support (the previous SDK's stored state, the reserved alias label, default icon names).
+Runtime/Plugins/iOS/Native~/OpenPushLiveActivities.xcframework/** onesignal ^(?:(?!(?i:one[ _-]?signal)).|OneSignal(?:LiveActivity|[CF][0-9]+Activity|[A-Za-z]{1,2}[0-9]+Attributes)|(?<![A-Za-z./])onesignal(?:WidgetURL|A3URL|AA0|(?![A-Za-z./-])))*$ -- compatibility Live Activity attributes, their payload key and widget URL helper in the iOS native SDK (Swift symbols and interfaces)
+Runtime/Plugins/Android/maven~/ai/openpush/openpush-android/*/openpush-android-*.aar!classes.jar!ai/openpush/android/SharedPreferencesPriorInstallSource.class onesignal (^|\W)(OneSignal|ONESIGNAL_USERSTATE_SYNCVALYES_CURRENT_STATE)$ -- previous SDK's stored state, read for migration
+Runtime/Plugins/Android/maven~/ai/openpush/openpush-android/*/openpush-android-*.aar!classes.jar!ai/openpush/android/OpenPush.class onesignal ^onesignal_id$ -- alias label reserved by the server
+Runtime/Plugins/Android/maven~/ai/openpush/openpush-android-fcm/*/openpush-android-fcm-*.aar!classes.jar!ai/openpush/android/fcm/OpenPushNotificationRenderer.class onesignal ^(ic_stat_onesignal_default|ic_onesignal_large_icon_default)$ -- default icon names a migrated app keeps
+
+# Test data and the user-facing format hint.
+Runtime/Core/OpenPushEmailAddress.cs email use name@domain\.tld -- format hint in the validation message
+Tests~/Bridge/OpenPushEmailAddressTests.cs email "a@b\.co" -- minimal valid address in validation tests
+Tests~/Bridge/OpenPushFacadeEmailTests.cs email "a@b\.co" -- minimal valid address in validation tests

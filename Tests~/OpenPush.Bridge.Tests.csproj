@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Projects share Tests~: separate bin here, separate obj in Directory.Build.props. -->
+    <BaseOutputPath>bin/bridge/</BaseOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Runtime/Core/**/*.cs" />
+    <Compile Include="../Runtime/Contract/**/*.cs" />
+    <Compile Include="../Runtime/Events/**/*.cs" />
+    <Compile Include="../Runtime/Stub/**/*.cs" />
+    <Compile Include="../Runtime/Facade/**/*.cs" />
+    <Compile Include="../Runtime/Migration/**/*.cs" />
+    <Compile Include="../Runtime/Unity/OpenPushSettingsSnapshotReader.cs" />
+    <!-- The settings asset class itself, over Support/UnityEngineStandIns.cs: its initializers decide
+         what an existing asset without a newer field does, so they are tested on the real class. -->
+    <Compile Include="../Runtime/Unity/OpenPushSettings.cs" />
+    <Compile Include="Support/UnityEngineStandIns.cs" />
+    <Compile Include="../Runtime/Unity/Demo/OpenPushDemoInAppFixture.cs" />
+    <Compile Include="Bridge/**/*.cs" />
+    <Compile Include="Support/FakePlatform.cs" />
+    <Compile Include="Support/QueueDispatcher.cs" />
+    <Compile Include="Support/FacadeTestBase.cs" />
+    <Compile Include="Support/InMemoryLegacyPrefs.cs" />
+    <None Include="Fixtures/**/*.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../package.json" Link="package.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+</Project>

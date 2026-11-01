@@ -1,0 +1,14 @@
+{
+  "name": "OpenPush.iOS",
+  "rootNamespace": "OpenPushSDK.iOS",
+  "references": ["OpenPush.Runtime"],
+  "includePlatforms": ["iOS"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

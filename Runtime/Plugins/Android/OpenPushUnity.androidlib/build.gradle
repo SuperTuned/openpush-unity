@@ -1,0 +1,80 @@
+// Unity includes a *.androidlib folder in the exported Gradle project as a
+// library subproject of :unityLibrary. It generates a build file for that
+// subproject from its own libTemplate.gradle only when the folder has none, and
+// uses this file verbatim when it is present — nothing is injected into it. So
+// everything the module needs is declared here: the dependencies the adapter
+// compiles against, and the consumer ProGuard rules, which Unity's generated
+// build file would not declare (consumer-proguard.pro would be packaged but
+// never applied). The package floor is Unity 2022.3 (AGP 7.1.2).
+apply plugin: 'com.android.library'
+
+// The player module reports its compile SDK as "android-NN". Take the number,
+// never below 33, which is the level Unity's own Android library plug-ins floor
+// at and above which nothing in this module has to reason about.
+//
+// Every step guards a null VALUE — the property itself always exists on the
+// extension, so `?.` is not there for a missing one. compileSdkVersion reads
+// back as null when the player module has not set it yet, find() returns null
+// for a level with no digits in it ("android-VanillaIceCream"), and either would
+// otherwise throw out of a Gradle file no host can edit, in a build whose only
+// visible failure is a line of NullPointerException. The floor stands in for a
+// value that cannot be read.
+def compileSdkFrom(unityLibrary) {
+    def raw = unityLibrary.compileSdkVersion?.toString()?.find('\\d+')
+    def version = raw ? raw.toInteger() : 33
+    if (version < 33) version = 33
+    return version
+}
+
+android {
+    // AGP 7.3+ requires the namespace here, and warns that the manifest's
+    // package attribute is deprecated — AGP 8 still accepts it. AGP 7.1.2
+    // (Unity 2022.3) has no namespace property and reads the package attribute
+    // instead, so the manifest keeps it and this assignment is guarded.
+    if (project.android.hasProperty('namespace')) {
+        namespace 'ai.openpush.unity'
+    }
+
+    // Compile against whatever the player module compiles against instead of
+    // pinning a version the host may not have installed. The digits are parsed
+    // out rather than the "android-NN" string being passed straight through, so
+    // this keeps working on an AGP that drops the String overload.
+    def unityLibrary = project(':unityLibrary').extensions.getByName('android')
+    compileSdkVersion compileSdkFrom(unityLibrary)
+    buildToolsVersion unityLibrary.buildToolsVersion
+
+    defaultConfig {
+        // The native SDK's floor.
+        minSdkVersion 24
+        // Travels with the module, so a host building with Minify enabled needs
+        // no keep rules of its own.
+        consumerProguardFiles 'consumer-proguard.pro'
+    }
+
+    // Java 11, matching the natives' bytecode (Unity 2022.3's AGP 7.1.2 dexes Java 11).
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    sourceSets {
+        main {
+            // The manifest sits at the folder root, which is the Unity plug-in
+            // layout rather than AGP's default src/main. The Java sources are
+            // already under src/main/java, so srcDirs stays at the AGP default.
+            manifest.srcFile 'AndroidManifest.xml'
+        }
+    }
+}
+
+// The adapter compiles against the natives EDM4U resolves for the player from the in-package Maven
+// repo (maven~). The repositories come from the settingsTemplate.gradle EDM4U patches. The version
+// must be the one maven~ holds (openpush-android.version.txt) and the one
+// Editor/Android/OpenPushAndroidDependenciesXml writes for EDM4U: the in-package repository has
+// no other version, so a stale pin here fails every host's Android build with an unresolved
+// dependency. scripts/verify-android-artifacts.sh (CI) fails when the three disagree.
+dependencies {
+    implementation 'ai.openpush:openpush-android:1.2.2'
+    implementation 'ai.openpush:openpush-android-in-app-messages:1.2.2'
+    implementation 'ai.openpush:openpush-android-live-updates:1.2.2'
+}

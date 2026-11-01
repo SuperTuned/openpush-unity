@@ -1,0 +1,78 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "ai.openpush",
+    "module": "openpush-android-live-updates",
+    "version": "1.2.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.13"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "openpush-android-live-updates-1.2.2.aar",
+          "url": "openpush-android-live-updates-1.2.2.aar",
+          "size": 27942,
+          "sha512": "46e96e9bbaa0a5f7ce2a62687b2a03d0bc8de3259e99972c01157292aea001126e32ba8d4d7b7f80a6b401110709a08aa298f0cdd636ae878bcdc5345e462829",
+          "sha256": "9752613600be4184b98e69bf57b600ccb173d96485b3e3c5b0ba5221bcd61302",
+          "sha1": "155ac0fc6c5413672b068f1384f5cfabdd91c78b",
+          "md5": "330ead552c55a8eaf1417307333c1d86"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "openpush-android-live-updates-1.2.2.aar",
+          "url": "openpush-android-live-updates-1.2.2.aar",
+          "size": 27942,
+          "sha512": "46e96e9bbaa0a5f7ce2a62687b2a03d0bc8de3259e99972c01157292aea001126e32ba8d4d7b7f80a6b401110709a08aa298f0cdd636ae878bcdc5345e462829",
+          "sha256": "9752613600be4184b98e69bf57b600ccb173d96485b3e3c5b0ba5221bcd61302",
+          "sha1": "155ac0fc6c5413672b068f1384f5cfabdd91c78b",
+          "md5": "330ead552c55a8eaf1417307333c1d86"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "openpush-android-live-updates-1.2.2-sources.jar",
+          "url": "openpush-android-live-updates-1.2.2-sources.jar",
+          "size": 13144,
+          "sha512": "118fa0b626a5c66c375076f00cbfd8f780acef0688c9f085c99a2847632e066919dca9423cd6c5bbb3e897f5bba1e7d6c5fb9b4a62c5ce5d439eafc3b7fd51b8",
+          "sha256": "f3dacae455b6b23bb3f8e2f69b8bf793ed4d6af3fe2806693fc3d9f8e4864422",
+          "sha1": "eb9fbb609c9538f584587289346a2dbb0504a2ca",
+          "md5": "fde3330c7c88ccddbc7b1d4e2e02cc39"
+        }
+      ]
+    }
+  ]
+}

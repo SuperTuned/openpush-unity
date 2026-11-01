@@ -1,0 +1,157 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name OpenPushCore -package-name openpush_ios -module-alias Module___OpenPushCore=OpenPushCore -module-alias Module____StringProcessing=_StringProcessing -module-alias Module____SwiftConcurrencyShims=_SwiftConcurrencyShims -module-alias Module____Concurrency=_Concurrency -module-alias Module___Security=Security
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import Module___Security
+import Swift
+import Module____Concurrency
+import Module____StringProcessing
+import Module____SwiftConcurrencyShims
+public struct DeviceCredentialStore : Swift.Sendable {
+  public let service: Swift.String
+  public let account: Swift.String
+  public let accessGroup: Swift.String?
+  public init(service: Swift.String, account: Swift.String = "device-key", accessGroup: Swift.String? = nil)
+  @discardableResult
+  public func save(_ value: Swift.String) -> Darwin.OSStatus
+  public func load() -> Swift.String?
+  @discardableResult
+  public func wipe() -> Darwin.OSStatus
+  @discardableResult
+  public func migrateLegacy(defaults: Foundation.UserDefaults?, key: Swift.String) -> Swift.Bool
+}
+public struct OpenPushConfiguration : Swift.Sendable, Swift.Equatable {
+  public static let defaultServerURL: Swift.String
+  public let serverURL: Swift.String
+  public let appID: Swift.String
+  public let sdkKey: Swift.String
+  public let platform: Swift.String
+  public let tokenKey: Swift.String
+  public let appGroup: Swift.String?
+  public var optedOutKey: Swift.String {
+    get
+  }
+  public var promptedKey: Swift.String {
+    get
+  }
+  public static let sdkKeyInfoKey: Swift.String
+  public static let appIDInfoKey: Swift.String
+  public static let suppressLaunchURLsInfoKey: Swift.String
+  public static func bundledSDKKey(lookup: (Swift.String) -> Any? = { Bundle.main.object(forInfoDictionaryKey: $0) }) -> Swift.String?
+  public static func bundledAppID(lookup: (Swift.String) -> Any? = { Bundle.main.object(forInfoDictionaryKey: $0) }) -> Swift.String?
+  public init(appID: Swift.String, sdkKey: Swift.String, serverURL: Swift.String = OpenPushConfiguration.defaultServerURL, platform: Swift.String = "ios", tokenKey: Swift.String = "openpush.deviceToken", appGroup: Swift.String? = nil)
+  public static func == (a: Module___OpenPushCore.OpenPushConfiguration, b: Module___OpenPushCore.OpenPushConfiguration) -> Swift.Bool
+}
+public enum OpenPushPayload {
+  public struct Action : Swift.Sendable, Swift.Equatable {
+    public let id: Swift.String
+    public let label: Swift.String
+    public let icon: Swift.String
+    public let systemIcon: Swift.Bool
+    public let url: Foundation.URL?
+    public init(id: Swift.String, label: Swift.String, icon: Swift.String = "", systemIcon: Swift.Bool = false, url: Foundation.URL? = nil)
+    public static func == (a: Module___OpenPushCore.OpenPushPayload.Action, b: Module___OpenPushCore.OpenPushPayload.Action) -> Swift.Bool
+  }
+  public static func messageID(from userInfo: [Swift.AnyHashable : Any]) -> Swift.String?
+  public static func actions(from userInfo: [Swift.AnyHashable : Any]) -> [Module___OpenPushCore.OpenPushPayload.Action]
+  public static let badgeIncrementKey: Swift.String
+  public static func badgeIncrement(from userInfo: [Swift.AnyHashable : Any]) -> Swift.Int?
+  public static func actionCategory(from userInfo: [Swift.AnyHashable : Any]) -> Swift.String?
+  public static func receiptBody(types: [Swift.String], messageID: Swift.String, token: Swift.String, appID: Swift.String, surface: Swift.String? = nil) -> [Swift.String : Any]
+  public static func receiptBody(receipts: [(type: Swift.String, messageID: Swift.String)], token: Swift.String, appID: Swift.String) -> [Swift.String : Any]
+  public static func appSessionBody(token: Swift.String) -> [Swift.String : Any]
+  public static func appSessionDurationBody(token: Swift.String, seconds: Foundation.TimeInterval, idempotencyKey: Swift.String) -> [Swift.String : Any]
+}
+indirect public enum OpenPushJSONValue : Swift.Sendable, Swift.Equatable, Swift.Codable {
+  case string(Swift.String)
+  case number(Swift.Double)
+  case bool(Swift.Bool)
+  case null
+  case array([Module___OpenPushCore.OpenPushJSONValue])
+  case object([Swift.String : Module___OpenPushCore.OpenPushJSONValue])
+  public init?(_ any: Any)
+  public var stringValue: Swift.String? {
+    get
+  }
+  public var numberValue: Swift.Double? {
+    get
+  }
+  public var boolValue: Swift.Bool? {
+    get
+  }
+  public var objectValue: [Swift.String : Module___OpenPushCore.OpenPushJSONValue]? {
+    get
+  }
+  public var arrayValue: [Module___OpenPushCore.OpenPushJSONValue]? {
+    get
+  }
+  public subscript(key: Swift.String) -> Module___OpenPushCore.OpenPushJSONValue? {
+    get
+  }
+  public var anyValue: Any {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (a: Module___OpenPushCore.OpenPushJSONValue, b: Module___OpenPushCore.OpenPushJSONValue) -> Swift.Bool
+}
+public struct OpenPushNotification : Swift.Sendable, Swift.Equatable {
+  public let messageId: Swift.String?
+  public let title: Swift.String?
+  public let subtitle: Swift.String?
+  public let body: Swift.String?
+  public let launchURL: Foundation.URL?
+  public let imageURL: Foundation.URL?
+  public let badge: Swift.Int?
+  public let badgeIncrement: Swift.Int?
+  public let sound: Swift.String?
+  public let category: Swift.String?
+  public let threadId: Swift.String?
+  public let interruptionLevel: Swift.String?
+  public let relevanceScore: Swift.Double?
+  public let contentAvailable: Swift.Bool
+  public let mutableContent: Swift.Bool
+  public let actions: [Module___OpenPushCore.OpenPushPayload.Action]
+  public let additionalData: [Swift.String : Module___OpenPushCore.OpenPushJSONValue]
+  public let rawPayload: [Swift.String : Module___OpenPushCore.OpenPushJSONValue]
+  public var isOpenPush: Swift.Bool {
+    get
+  }
+  public init(userInfo: [Swift.AnyHashable : Any])
+  public static func == (a: Module___OpenPushCore.OpenPushNotification, b: Module___OpenPushCore.OpenPushNotification) -> Swift.Bool
+}
+public enum OpenPushSDKVersion {
+  public static let current: Swift.String
+  public static let headerField: Swift.String
+  public static let wrapperHeaderField: Swift.String
+  public static let headerValue: Swift.String
+}
+public struct OpenPushSharedState : Swift.Sendable, Swift.Equatable {
+  public let appID: Swift.String
+  public let serverURL: Swift.String
+  public let sdkKey: Swift.String
+  public let token: Swift.String?
+  public let subscriptionID: Swift.String?
+  public let sdkWrapper: Swift.String?
+  public let appGroup: Swift.String?
+  public init(appID: Swift.String, serverURL: Swift.String, sdkKey: Swift.String, token: Swift.String? = nil, subscriptionID: Swift.String? = nil, sdkWrapper: Swift.String? = nil, appGroup: Swift.String? = nil)
+  public static let keyPrefix: Swift.String
+  public static func save(_ value: Module___OpenPushCore.OpenPushSharedState, appGroup: Swift.String)
+  public static func load(appGroup: Swift.String) -> Module___OpenPushCore.OpenPushSharedState?
+  public static func clear(appGroup: Swift.String)
+  public var configuration: Module___OpenPushCore.OpenPushConfiguration {
+    get
+  }
+  public static func == (a: Module___OpenPushCore.OpenPushSharedState, b: Module___OpenPushCore.OpenPushSharedState) -> Swift.Bool
+}
+extension Module___OpenPushCore.OpenPushSharedState {
+  public static let badgeCountKey: Swift.String
+  public static func badgeCount(appGroup: Swift.String) -> Swift.Int?
+  @discardableResult
+  public static func setBadgeCount(_ count: Swift.Int, appGroup: Swift.String) -> Swift.Bool
+  public static func incrementBadgeCount(by increment: Swift.Int, appGroup: Swift.String) -> Swift.Int?
+}

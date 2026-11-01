@@ -1,0 +1,24 @@
+// OpenPush notification service extension, copied into the exported Xcode project by
+// OpenPushServiceExtensionInjector. The native handler attaches the campaign image, registers
+// the action buttons and posts the received + confirmed receipts. It reads the app's state from
+// the App Group named by OpenPushAppGroup in this extension's Info.plist. Receipts authenticate on
+// the app's SDK key, so no device credential (and no shared Keychain group) is needed.
+
+import Foundation
+import UserNotifications
+import OpenPushNSE
+
+final class OpenPushNotificationService: UNNotificationServiceExtension {
+    private let openPush: OpenPushNotificationServiceHandler = {
+        var options = OpenPushNotificationServiceHandler.Options()
+        options.appGroup = Bundle.main.object(forInfoDictionaryKey: "OpenPushAppGroup") as? String
+        return OpenPushNotificationServiceHandler(options: options)
+    }()
+
+    override func didReceive(_ request: UNNotificationRequest,
+                             withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        openPush.didReceive(request, withContentHandler: contentHandler)
+    }
+
+    override func serviceExtensionTimeWillExpire() { openPush.serviceExtensionTimeWillExpire() }
+}

@@ -1,0 +1,10 @@
+version=1.2.2
+source_repository=openpush-android
+source_tag=1.2.2
+jdk=openjdk version "17.0.18" 2026-01-20
+kotlin=2.0.21
+agp=8.12.2
+bytecode=java11
+min_sdk=24
+built_at=2026-11-01T10:28:34Z
+build_command=OPENPUSH_ANDROID_DIR=<openpush-android checkout> JDK17=<JDK 17 home> scripts/build-android-artifacts.sh

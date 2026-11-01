@@ -1,0 +1,145 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "ai.openpush",
+    "module": "openpush-android-fcm",
+    "version": "1.2.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.13"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "ai.openpush",
+          "module": "openpush-android",
+          "version": {
+            "requires": "1.2.2"
+          }
+        },
+        {
+          "group": "ai.openpush",
+          "module": "openpush-android-live-updates",
+          "version": {
+            "requires": "1.2.2"
+          }
+        },
+        {
+          "group": "com.google.firebase",
+          "module": "firebase-messaging",
+          "version": {
+            "requires": "24.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "openpush-android-fcm-1.2.2.aar",
+          "url": "openpush-android-fcm-1.2.2.aar",
+          "size": 71234,
+          "sha512": "6dad479e24495dba157b8b8169746000a040be18189c49fd36f5730deafc500103dc55a918b2e08cb4a652a63a01733247676f185d6bbf53eaa53647dd21b934",
+          "sha256": "f8ce06d7dc5cfc754a014920c5276b09c5fed9a6f41a07c07923b072112a4bf6",
+          "sha1": "2c69f26f05f61f830be3bb5ecac3d10ea7333291",
+          "md5": "ec401b84b0e53a53d2adb044d62cee3e"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.startup",
+          "module": "startup-runtime",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "ai.openpush",
+          "module": "openpush-android",
+          "version": {
+            "requires": "1.2.2"
+          }
+        },
+        {
+          "group": "ai.openpush",
+          "module": "openpush-android-live-updates",
+          "version": {
+            "requires": "1.2.2"
+          }
+        },
+        {
+          "group": "com.google.firebase",
+          "module": "firebase-messaging",
+          "version": {
+            "requires": "24.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "openpush-android-fcm-1.2.2.aar",
+          "url": "openpush-android-fcm-1.2.2.aar",
+          "size": 71234,
+          "sha512": "6dad479e24495dba157b8b8169746000a040be18189c49fd36f5730deafc500103dc55a918b2e08cb4a652a63a01733247676f185d6bbf53eaa53647dd21b934",
+          "sha256": "f8ce06d7dc5cfc754a014920c5276b09c5fed9a6f41a07c07923b072112a4bf6",
+          "sha1": "2c69f26f05f61f830be3bb5ecac3d10ea7333291",
+          "md5": "ec401b84b0e53a53d2adb044d62cee3e"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "openpush-android-fcm-1.2.2-sources.jar",
+          "url": "openpush-android-fcm-1.2.2-sources.jar",
+          "size": 20037,
+          "sha512": "ebbe207e12ec1c807e29d58efc5ba55eaf14c119a5bf13a52caeb05306363dcc39730e3fab91b19281741c81895a25e088a28060e4f328399d1bc9fd77cbcc7e",
+          "sha256": "fdba4a64e1542ee40d17f6c5b9d7c0a745f7ccc27c80240a543d42cbe2bbc8d3",
+          "sha1": "634f9506b774fddd16779ea86ae54ad8426cf637",
+          "md5": "a8eee11feda52ee4533e7214c2433423"
+        }
+      ]
+    }
+  ]
+}

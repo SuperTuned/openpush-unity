@@ -1,0 +1,64 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name OpenPushNSE -package-name openpush_ios -module-alias Module___OpenPushNSE=OpenPushNSE -module-alias Module____StringProcessing=_StringProcessing -module-alias Module____SwiftConcurrencyShims=_SwiftConcurrencyShims -module-alias Module____Concurrency=_Concurrency -module-alias Module___UserNotifications=UserNotifications -module-alias Module___OpenPushCore=OpenPushCore
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import Module___OpenPushCore
+import Swift
+@preconcurrency import Module___UserNotifications
+import Module____Concurrency
+import Module____StringProcessing
+import Module____SwiftConcurrencyShims
+public enum OpenPushAttachmentLoader {
+  public static let attachmentIdentifier: Swift.String
+  public struct Options : Swift.Sendable {
+    public var timeout: Swift.Double
+    public var maxBytes: Swift.Int
+    public var allowedExtensions: Swift.Set<Swift.String>
+    public init()
+  }
+  public typealias Download = @Sendable (Foundation.URLRequest, @escaping @Sendable (Foundation.URL?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void) -> Swift.Void
+  public static func fileExtension(for url: Foundation.URL, mimeType: Swift.String?, allowed: Swift.Set<Swift.String> = Options().allowedExtensions) -> Swift.String?
+  public static func load(_ url: Foundation.URL, options: Module___OpenPushNSE.OpenPushAttachmentLoader.Options = Options(), download: @Sendable (Foundation.URLRequest, @escaping @Sendable (Foundation.URL?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void) -> Swift.Void = urlSessionDownload, completion: @escaping @Sendable (Module___UserNotifications.UNNotificationAttachment?) -> Swift.Void)
+  public static func urlSessionDownload(_ request: Foundation.URLRequest, _ completion: @escaping @Sendable (Foundation.URL?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void)
+}
+@available(macOS 10.14, *)
+public enum OpenPushNotificationActions {
+  public struct CategoryStore : Swift.Sendable {
+    public var read: @Sendable (@escaping @Sendable (Swift.Set<Module___UserNotifications.UNNotificationCategory>) -> Swift.Void) -> Swift.Void
+    public var write: @Sendable (Swift.Set<Module___UserNotifications.UNNotificationCategory>) -> Swift.Void
+    public init(read: @escaping @Sendable (@escaping @Sendable (Swift.Set<Module___UserNotifications.UNNotificationCategory>) -> Swift.Void) -> Swift.Void, write: @escaping @Sendable (Swift.Set<Module___UserNotifications.UNNotificationCategory>) -> Swift.Void)
+    public static let system: Module___OpenPushNSE.OpenPushNotificationActions.CategoryStore
+  }
+  public static func apply(from userInfo: [Swift.AnyHashable : Any], to content: Module___UserNotifications.UNMutableNotificationContent, categories: Module___OpenPushNSE.OpenPushNotificationActions.CategoryStore = .system, ledger: Foundation.UserDefaults = .standard, completion: @escaping @Sendable (Swift.Int) -> Swift.Void)
+  public static func apply(from userInfo: [Swift.AnyHashable : Any], to content: Module___UserNotifications.UNMutableNotificationContent)
+}
+@_hasMissingDesignatedInitializers final public class OpenPushNotificationServiceHandler : @unchecked Swift.Sendable {
+  public struct Options : Swift.Sendable {
+    public var appGroup: Swift.String?
+    public var credentialStore: Module___OpenPushCore.DeviceCredentialStore?
+    public var configuration: Module___OpenPushCore.OpenPushConfiguration?
+    public var receiptTypes: [Swift.String]
+    public var receiptJitter: Swift.ClosedRange<Swift.Double>
+    public var attachments: Module___OpenPushNSE.OpenPushAttachmentLoader.Options
+    public var loadAttachments: Swift.Bool
+    public var onEvent: (@Sendable (Swift.String) -> Swift.Void)?
+    public init()
+  }
+  public typealias Transport = @Sendable (Foundation.URLRequest, @escaping @Sendable (Swift.Int) -> Swift.Void) -> Swift.Void
+  public typealias Scheduler = @Sendable (Swift.Double, @escaping @Sendable () -> Swift.Void) -> Swift.Void
+  convenience public init(options: Module___OpenPushNSE.OpenPushNotificationServiceHandler.Options = Options(), categories: Module___OpenPushNSE.OpenPushNotificationActions.CategoryStore = .system, download: @escaping Module___OpenPushNSE.OpenPushAttachmentLoader.Download = OpenPushAttachmentLoader.urlSessionDownload, transport: @escaping Module___OpenPushNSE.OpenPushNotificationServiceHandler.Transport = OpenPushNotificationServiceHandler.urlSessionTransport, scheduler: @escaping Module___OpenPushNSE.OpenPushNotificationServiceHandler.Scheduler = OpenPushNotificationServiceHandler.dispatchAfter, random: @escaping @Sendable (Swift.ClosedRange<Swift.Double>) -> Swift.Double = { Double.random(in: $0) })
+  final public func didReceive(_ request: Module___UserNotifications.UNNotificationRequest, withContentHandler contentHandler: @escaping (Module___UserNotifications.UNNotificationContent) -> Swift.Void)
+  final public func serviceExtensionTimeWillExpire()
+  final public func handleIfOpenPush(_ request: Module___UserNotifications.UNNotificationRequest, withContentHandler contentHandler: @escaping (Module___UserNotifications.UNNotificationContent) -> Swift.Void) -> Swift.Bool
+  final public func serviceExtensionTimeWillExpireIfHandling() -> Swift.Bool
+  public static func urlSessionTransport(_ request: Foundation.URLRequest, _ completion: @escaping @Sendable (Swift.Int) -> Swift.Void)
+  public static func dispatchAfter(_ delay: Swift.Double, _ work: @escaping @Sendable () -> Swift.Void)
+  @objc deinit
+}
+public enum OpenPushReceiptRequest {
+  public static func make(configuration: Module___OpenPushCore.OpenPushConfiguration, deviceCredential: Swift.String?, token: Swift.String, messageID: Swift.String, types: [Swift.String], sdkWrapper: Swift.String? = nil) -> Foundation.URLRequest?
+}

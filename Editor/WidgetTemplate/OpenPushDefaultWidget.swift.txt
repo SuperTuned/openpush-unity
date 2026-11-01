@@ -1,0 +1,36 @@
+import ActivityKit
+import SwiftUI
+import WidgetKit
+import OpenPushLiveActivities
+
+@main
+struct OpenPushWidgets: WidgetBundle {
+    var body: some Widget { OpenPushDefaultWidget() }
+}
+
+@available(iOS 16.1, *)
+struct OpenPushDefaultWidget: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: DefaultLiveActivityAttributes.self) { context in
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(context.attributes.data["title"]?.asString() ?? "Live").font(.headline)
+                    Text(context.state.data["status"]?.asString() ?? "").foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text(context.state.data["value"]?.asString() ?? "").font(.title2.bold())
+            }.padding()
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Text(context.attributes.data["title"]?.asString() ?? "Live")
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Text(context.state.data["value"]?.asString() ?? "")
+                }
+            } compactLeading: { Text("OP") }
+              compactTrailing: { Text(context.state.data["value"]?.asString() ?? "") }
+              minimal: { Text("OP") }
+        }
+    }
+}

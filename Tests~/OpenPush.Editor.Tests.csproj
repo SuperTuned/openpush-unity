@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <BaseOutputPath>bin/editor/</BaseOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>UNITY_IOS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Real iOS post-export code against Unity-shaped Xcode stand-ins. -->
+    <Compile Include="../Editor/OpenPushLiveActivityWidgetInjector.cs" />
+    <Compile Include="../Editor/OpenPushIOSBuildSettings.cs" />
+    <Compile Include="../Editor/OpenPushIOSCapabilities.cs" />
+    <Compile Include="../Editor/OpenPushServiceExtensionInjector.cs" />
+    <Compile Include="../Editor/iOS/OpenPushNativeFrameworks.cs" />
+    <Compile Include="../Editor/iOS/OpenPushXcodeSources.cs" />
+    <Compile Include="../Editor/iOS/OpenPushIOSIdentifiers.cs" />
+    <Compile Include="../Editor/iOS/OpenPushExtensionSigning.cs" />
+    <Compile Include="../Editor/iOS/OpenPushEditorTemplates.cs" />
+    <Compile Include="../Editor/iOS/OpenPushExportAppGroup.cs" />
+    <Compile Include="../Editor/iOS/OpenPushExtensionPrompt.cs" />
+    <Compile Include="../Editor/iOS/OpenPushExistingExtensionStep.cs" />
+    <Compile Include="../Editor/iOS/OpenPushSetupRecorder.cs" />
+    <Compile Include="../Editor/iOS/OpenPushPrivacyManifest.cs" />
+    <Compile Include="../Editor/Plumbing/*.cs" />
+    <Compile Include="../Editor/Setup/RunAll/OpenPushRunAllPlanner.cs" />
+    <!-- When the Setup rows evaluate again and when the stamped project scans run again. -->
+    <Compile Include="../Editor/Setup/OpenPushProjectChangeStamp.cs" />
+    <Compile Include="../Editor/Setup/OpenPushSetupEvaluation.cs" />
+    <Compile Include="../Editor/Setup/OpenPushSetupCheck.cs" />
+    <Compile Include="../Editor/Setup/Checks/NotificationIconsPresent.cs" />
+    <Compile Include="../Editor/Setup/RunAll/OpenPushSetupPaste.cs" />
+    <Compile Include="../Editor/Android/OpenPushGoogleServices.cs" />
+    <Compile Include="../Editor/Compat/OpenPushVendorFingerprints.cs" />
+    <Compile Include="../Runtime/Core/OpenPushIosExtensionMode.cs" />
+    <Compile Include="../Runtime/Core/OpenPushVersion.cs" />
+    <Compile Include="Support/EditorStandIns.cs" />
+    <Compile Include="Support/IosExportFixture.cs" />
+    <!-- Pure Editor builders (no UnityEditor types), with tests. -->
+    <Compile Include="../Editor/Android/OpenPushAndroidDependenciesXml.cs" />
+    <Compile Include="../Editor/Android/OpenPushAndroidManifestBuilder.cs" />
+    <Compile Include="../Editor/Android/OpenPushResolveState.cs" />
+    <Compile Include="../Editor/Android/OpenPushAndroidChecks.cs" />
+    <Compile Include="../Editor/Android/OpenPushEdm4uManifest.cs" />
+    <Compile Include="../Editor/Android/OpenPushNotificationIcons.cs" />
+    <Compile Include="../Editor/Compat/OpenPushMigratedIconNames.cs" />
+    <!-- The Android pre-build hook and the file writer it drives, against stand-ins for EDM4U. -->
+    <Compile Include="../Editor/Android/OpenPushAndroidDependencies.cs" />
+    <Compile Include="../Editor/Android/OpenPushAndroidPreBuild.cs" />
+    <Compile Include="../Runtime/Core/OpenPushAndroidPushDelivery.cs" />
+    <Compile Include="../Runtime/Core/OpenPushJson.cs" />
+    <Compile Include="Editor/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+</Project>

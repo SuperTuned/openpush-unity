@@ -1,0 +1,136 @@
+name: Unity package
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A newer push to the same pull request cancels the run it supersedes; runs on main always finish.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # Names, paths, process markers and secrets that must not be published, and
+  # the previous SDK's name outside the compatibility surface.
+  public-content:
+    name: Public content
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - name: Check public content
+        run: scripts/check-public-content.sh
+
+  test:
+    name: Managed tests
+    runs-on: ubuntu-latest
+    # About 1 minute on a hosted runner.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        with:
+          dotnet-version: "8.0.x"
+      - name: Bridge tests (facade over a fake platform)
+        run: dotnet test "Tests~/OpenPush.Bridge.Tests.csproj"
+
+      # Runs the Editor builders (EDM4U XML, Android manifest, resolve state) and
+      # the iOS post-export steps against Unity-shaped Xcode stand-ins.
+      - name: Editor builders and iOS post-export compile
+        run: dotnet test "Tests~/OpenPush.Editor.Tests.csproj"
+      - name: Vendored natives are intact
+        run: |
+          scripts/verify-android-artifacts.sh
+          scripts/check-android-keep-rules.sh
+
+      # Compiles the opt-in compatibility facade against the real facade. The
+      # compat assembly is nothing but forwarding, so compiling it IS most of the
+      # test; the assertions cover that each alias lands on the same OpenPush
+      # state a native call would.
+      - name: Compatibility facade tests
+        run: dotnet test "Tests~/OpenPush.Compat.Tests.csproj"
+
+      - name: Core stays Unity-free
+        run: |
+          if grep -rn "UnityEngine" Runtime/Core/ Runtime/Contract/ Runtime/Events/ Runtime/Stub/ Runtime/Facade/ Runtime/Migration/ 2>/dev/null; then
+            echo "Runtime/{Core,Contract,Events,Stub,Facade,Migration} must not reference UnityEngine" && exit 1
+          fi
+      - name: Asset metadata is complete
+        run: |
+          scripts/generate-meta.sh
+          ignored_meta="$(git ls-files --others --ignored --exclude-standard -- Runtime.meta Runtime Editor.meta Editor scripts.meta scripts release-notes.meta release-notes)"
+          if [ -n "$ignored_meta" ]; then
+            echo "Package metadata must be tracked, not ignored:"
+            echo "$ignored_meta"
+            exit 1
+          fi
+          # Generated .meta files are new and therefore untracked, which a bare
+          # `git diff` does not see; stage everything first. A package missing
+          # .meta files imports broken when installed from git.
+          git add --all
+          if ! git diff --cached --stat --exit-code; then
+            echo "Run scripts/generate-meta.sh and commit the generated .meta files"
+            exit 1
+          fi
+
+  native:
+    name: Native sources
+    runs-on: macos-15
+    # Under a minute on a hosted runner.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - name: Vendored iOS frameworks are intact
+        run: scripts/verify-ios-artifacts.sh
+      - name: iOS native string ownership
+        run: Tests~/Native/verify-ios-native-strings.sh
+      - name: iOS link opening has one owner (the bridge)
+        run: Tests~/Native/verify-ios-launch-url-ownership.sh
+
+      # The check above is static. These compile everything the package ships
+      # natively — the Swift bridge against the vendored frameworks, the APNs
+      # listener, the click and foreground delegate hooks, the extension
+      # templates — which nothing compiled before an exported Xcode project did.
+      - name: iOS plugin sources compile
+        run: Tests~/Native/verify-ios-sources-compile.sh
+      - name: iOS credential store writes in place and migrates earlier items
+        run: Tests~/Native/verify-ios-credential-store.sh
+      - name: Swift sources type-check
+        run: Tests~/Native/verify-swift-sources-compile.sh
+
+      # The androidlib check compiles the Java adapter against the vendored AARs,
+      # the runner's Android SDK and kotlin-stdlib, then runs its JVM tests. A
+      # fresh runner has no Gradle cache to take kotlin-stdlib from, so it is
+      # fetched here and checked against a pinned checksum.
+      - name: Fetch kotlin-stdlib 2.0.21
+        run: |
+          jar="${RUNNER_TEMP:-/tmp}/kotlin-stdlib-2.0.21.jar"
+          curl -fsSL --retry 3 -o "$jar" \
+            https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.21/kotlin-stdlib-2.0.21.jar
+          echo "f31cc53f105a7e48c093683bbd5437561d1233920513774b470805641bedbc09  $jar" | shasum -a 256 -c -
+          echo "KOTLIN_STDLIB_JAR=$jar" >> "$GITHUB_ENV"
+      - name: androidlib sources compile and JVM tests
+        run: Tests~/Native/verify-android-sources-compile.sh
+
+      # Needs Unity's own managed assemblies. Hosted runners have no Unity, so
+      # there it reports a skip; it runs for real wherever Unity is installed.
+      - name: Managed sources compile under the platform defines (needs Unity)
+        run: Tests~/Native/verify-platform-compile.sh
+
+      # Not CI jobs: these need a licensed Unity 2022.3 editor (and Xcode for
+      # iOS) and take minutes. Run them before a release:
+      #   UNITY2022=<editor> scripts/test-feature-lab.sh        # Feature Lab EditMode tests
+      #   UNITY2022=<editor> scripts/build-android-export.sh    # APK + OpenPush.Android survives stripping
+      #   UNITY2022=<editor> scripts/build-ios-export.sh        # Xcode build + symbol and strip checks
+      #   UNITY2022=<editor> scripts/build-ios-manual-signing-export.sh  # manual-signing export checks

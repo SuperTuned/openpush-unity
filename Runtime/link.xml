@@ -1,0 +1,5 @@
+<linker>
+  <assembly fullname="OpenPush.Runtime" preserve="all" />
+  <assembly fullname="OpenPush.Android" preserve="all" />
+  <assembly fullname="OpenPush.iOS" preserve="all" />
+</linker>

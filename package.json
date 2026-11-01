@@ -1,0 +1,33 @@
+{
+  "name": "ai.openpush.unity",
+  "version": "1.2.2",
+  "displayName": "OpenPush",
+  "description": "OpenPush SDK: registration, automatic click receipts, identity, SMS and WhatsApp numbers with phone codes, email addresses, Journey Custom Events, Android Live Updates, and iOS Live Activities. No send surface.",
+  "unity": "2022.3",
+  "license": "Apache-2.0",
+  "keywords": ["push", "notifications", "openpush"],
+  "author": {
+    "name": "JuneSoftware Inc",
+    "url": "https://openpush.ai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SuperTuned/openpush-unity.git"
+  },
+  "documentationUrl": "https://github.com/SuperTuned/openpush-unity#readme",
+  "changelogUrl": "https://github.com/SuperTuned/openpush-unity/blob/1.2.2/CHANGELOG.md",
+  "licensesUrl": "https://github.com/SuperTuned/openpush-unity/blob/1.2.2/LICENSE",
+  "dependencies": {
+    "com.unity.modules.unitywebrequest": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
+    "com.unity.modules.uielements": "1.0.0",
+    "com.unity.modules.unitywebrequesttexture": "1.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Feature Lab",
+      "description": "An adaptive Demo/Live app for permission, subscription, PNS fixtures, consent, identity, tags, aliases, observers, and Android Live Updates.",
+      "path": "Samples~/FeatureLab"
+    }
+  ]
+}

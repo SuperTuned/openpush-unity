@@ -1,0 +1,150 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name OpenPushLiveActivities -package-name openpush_ios -module-alias Module___OpenPushLiveActivities=OpenPushLiveActivities -module-alias Module____StringProcessing=_StringProcessing -module-alias Module____SwiftConcurrencyShims=_SwiftConcurrencyShims -module-alias Module____Concurrency=_Concurrency -module-alias Module___ActivityKit=ActivityKit -module-alias Module___SwiftUI=SwiftUI -module-alias Module___WidgetKit=WidgetKit
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Module___ActivityKit
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import Swift
+import Module___SwiftUI
+import Module___WidgetKit
+import Module____Concurrency
+import Module____StringProcessing
+import Module____SwiftConcurrencyShims
+public struct OneSignalLiveActivityAttributeData : Swift.Codable, Swift.Hashable, Swift.Sendable {
+  public var activityId: Swift.String
+  public init(activityId: Swift.String)
+  public static func create(activityId: Swift.String) -> Module___OpenPushLiveActivities.OneSignalLiveActivityAttributeData
+  public static func == (a: Module___OpenPushLiveActivities.OneSignalLiveActivityAttributeData, b: Module___OpenPushLiveActivities.OneSignalLiveActivityAttributeData) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct OneSignalLiveActivityContentStateData : Swift.Codable, Swift.Hashable, Swift.Sendable {
+  public var notificationId: Swift.String
+  public init(notificationId: Swift.String)
+  public static func == (a: Module___OpenPushLiveActivities.OneSignalLiveActivityContentStateData, b: Module___OpenPushLiveActivities.OneSignalLiveActivityContentStateData) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol OneSignalLiveActivityContentState : Swift.Decodable, Swift.Encodable, Swift.Hashable {
+  var onesignal: Module___OpenPushLiveActivities.OneSignalLiveActivityContentStateData? { get set }
+}
+@available(iOS 16.1, *)
+public protocol OneSignalLiveActivityAttributes : Module___ActivityKit.ActivityAttributes where Self.ContentState : Module___OpenPushLiveActivities.OneSignalLiveActivityContentState {
+  var onesignal: Module___OpenPushLiveActivities.OneSignalLiveActivityAttributeData { get set }
+}
+@available(iOS 16.1, *)
+extension SwiftUICore.View {
+  @Module____Concurrency.MainActor public func onesignalWidgetURL<T>(_ url: Foundation.URL?, context: Module___WidgetKit.ActivityViewContext<T>) -> some SwiftUICore.View where T : Module___OpenPushLiveActivities.OneSignalLiveActivityAttributes
+  
+}
+@available(iOS 16.1, *)
+extension Module___WidgetKit.DynamicIsland {
+  public func onesignalWidgetURL<T>(_ url: Foundation.URL?, context: Module___WidgetKit.ActivityViewContext<T>) -> Module___WidgetKit.DynamicIsland where T : Module___OpenPushLiveActivities.OneSignalLiveActivityAttributes
+}
+public struct OpenPushLiveActivityAttributeData : Swift.Codable, Swift.Hashable, Swift.Sendable {
+  public var activityId: Swift.String
+  public init(activityId: Swift.String)
+  public static func create(activityId: Swift.String) -> Module___OpenPushLiveActivities.OpenPushLiveActivityAttributeData
+  public static func == (a: Module___OpenPushLiveActivities.OpenPushLiveActivityAttributeData, b: Module___OpenPushLiveActivities.OpenPushLiveActivityAttributeData) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct OpenPushLiveActivityContentStateData : Swift.Codable, Swift.Hashable, Swift.Sendable {
+  public var notificationId: Swift.String
+  public init(notificationId: Swift.String)
+  public static func == (a: Module___OpenPushLiveActivities.OpenPushLiveActivityContentStateData, b: Module___OpenPushLiveActivities.OpenPushLiveActivityContentStateData) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol OpenPushLiveActivityContentState : Swift.Decodable, Swift.Encodable, Swift.Hashable {
+  var openpush: Module___OpenPushLiveActivities.OpenPushLiveActivityContentStateData? { get set }
+}
+final public class OpenPushLiveActivitySetupOptions {
+  final public var enablePushToStart: Swift.Bool
+  final public var enablePushToUpdate: Swift.Bool
+  public init(enablePushToStart: Swift.Bool = true, enablePushToUpdate: Swift.Bool = true)
+  @objc deinit
+}
+@available(*, deprecated, renamed: "OpenPushLiveActivitySetupOptions")
+public typealias LiveActivitySetupOptions = Module___OpenPushLiveActivities.OpenPushLiveActivitySetupOptions
+@frozen public struct OpenPushAnyCodable : Swift.Codable, Swift.Hashable, @unchecked Swift.Sendable {
+  public let value: Any
+  public init<T>(_ value: T?)
+  public func asBool() -> Swift.Bool?
+  public func asInt() -> Swift.Int?
+  public func asDouble() -> Swift.Double?
+  public func asString() -> Swift.String?
+  public func asArray() -> [Module___OpenPushLiveActivities.OpenPushAnyCodable]?
+  public func asDict() -> [Swift.String : Module___OpenPushLiveActivities.OpenPushAnyCodable]?
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (lhs: Module___OpenPushLiveActivities.OpenPushAnyCodable, rhs: Module___OpenPushLiveActivities.OpenPushAnyCodable) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func map(_ values: [Swift.String : Any]) -> [Swift.String : Module___OpenPushLiveActivities.OpenPushAnyCodable]
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(*, deprecated, renamed: "OpenPushAnyCodable")
+public typealias AnyCodable = Module___OpenPushLiveActivities.OpenPushAnyCodable
+public enum OpenPushLiveActivityTypeName {
+  public static func derived<T>(_ type: T.Type) -> Swift.String
+}
+@available(iOS 16.1, *)
+public protocol OpenPushLiveActivityAttributes : Module___ActivityKit.ActivityAttributes where Self.ContentState : Module___OpenPushLiveActivities.OpenPushLiveActivityContentState {
+  var openpush: Module___OpenPushLiveActivities.OpenPushLiveActivityAttributeData { get set }
+}
+@available(iOS 16.1, *)
+public struct DefaultLiveActivityAttributes : Module___OpenPushLiveActivities.OpenPushLiveActivityAttributes, Swift.Sendable {
+  public struct ContentState : Module___OpenPushLiveActivities.OpenPushLiveActivityContentState, Swift.Sendable {
+    public var data: [Swift.String : Module___OpenPushLiveActivities.OpenPushAnyCodable]
+    public var openpush: Module___OpenPushLiveActivities.OpenPushLiveActivityContentStateData?
+    public init(data: [Swift.String : Module___OpenPushLiveActivities.OpenPushAnyCodable], openpush: Module___OpenPushLiveActivities.OpenPushLiveActivityContentStateData? = nil)
+    public init(from decoder: any Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+    public static func == (a: Module___OpenPushLiveActivities.DefaultLiveActivityAttributes.ContentState, b: Module___OpenPushLiveActivities.DefaultLiveActivityAttributes.ContentState) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var data: [Swift.String : Module___OpenPushLiveActivities.OpenPushAnyCodable]
+  public var openpush: Module___OpenPushLiveActivities.OpenPushLiveActivityAttributeData
+  public init(data: [Swift.String : Module___OpenPushLiveActivities.OpenPushAnyCodable], openpush: Module___OpenPushLiveActivities.OpenPushLiveActivityAttributeData)
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public enum OpenPushLiveActivityClickURL {
+  public static let scheme: Swift.String
+  public static let host: Swift.String
+  public static let clickPath: Swift.String
+  public static func build(originalURL: Foundation.URL?, activityId: Swift.String, activityType: Swift.String, notificationId: Swift.String?) -> Foundation.URL?
+}
+@available(iOS 16.1, *)
+extension SwiftUICore.View {
+  @Module____Concurrency.MainActor public func openpushWidgetURL<T>(_ url: Foundation.URL?, context: Module___WidgetKit.ActivityViewContext<T>) -> some SwiftUICore.View where T : Module___OpenPushLiveActivities.OpenPushLiveActivityAttributes
+  
+}
+@available(iOS 16.1, *)
+extension Module___WidgetKit.DynamicIsland {
+  public func openpushWidgetURL<T>(_ url: Foundation.URL?, context: Module___WidgetKit.ActivityViewContext<T>) -> Module___WidgetKit.DynamicIsland where T : Module___OpenPushLiveActivities.OpenPushLiveActivityAttributes
+}

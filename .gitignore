@@ -1,0 +1,45 @@
+# Unity project artifacts (when the package is opened inside a project)
+Library/
+Temp/
+Logs/
+UserSettings/
+
+# IDE and OS cruft
+.idea/
+.vs/
+*.csproj.user
+.DS_Store
+xcuserdata/
+DerivedData/
+.env
+local.properties
+
+# Signing material
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+
+# Working notes and agent state that never belong in the repository
+PRODUCT.md
+DESIGN.md
+.impeccable/
+.claude/
+.superpowers/
+
+# dotnet test harness output
+Tests~/bin/
+Tests~/obj/
+
+# Unity's trailing-tilde convention marks these as "not imported by Unity",
+# but they are still version-controlled. Re-include them explicitly: a global
+# `*~` pattern (a common editor-backup rule) otherwise matches the directory
+# names and silently hides everything inside.
+!Tests~/
+!Samples~/
+!Runtime/Plugins/Android/maven~/
+!Runtime/Plugins/iOS/Native~/
+
+# JVM crash logs and compiler replay files (they record local paths)
+hs_err_pid*.log
+replay_pid*.log

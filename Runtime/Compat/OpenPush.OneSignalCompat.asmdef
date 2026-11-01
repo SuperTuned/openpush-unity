@@ -1,0 +1,7 @@
+{
+  "name": "OpenPush.OneSignalCompat",
+  "references": ["OpenPush.Runtime"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "noEngineReferences": true
+}

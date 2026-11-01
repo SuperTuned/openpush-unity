@@ -1,0 +1,9 @@
+<Project>
+  <!-- Several projects share Tests~, so each gets its own obj/. BaseIntermediateOutputPath must be
+       set before Microsoft.Common.props is imported (MSB3539), which is why it lives here. -->
+  <PropertyGroup>
+    <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' == 'OpenPush.Bridge.Tests'">obj/bridge/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' == 'OpenPush.Compat.Tests'">obj/compat/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(MSBuildProjectName)' == 'OpenPush.Editor.Tests'">obj/editor/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+</Project>

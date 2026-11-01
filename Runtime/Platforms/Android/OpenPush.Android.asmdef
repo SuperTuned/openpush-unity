@@ -1,0 +1,14 @@
+{
+  "name": "OpenPush.Android",
+  "rootNamespace": "OpenPushSDK.Android",
+  "references": ["OpenPush.Runtime"],
+  "includePlatforms": ["Android"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

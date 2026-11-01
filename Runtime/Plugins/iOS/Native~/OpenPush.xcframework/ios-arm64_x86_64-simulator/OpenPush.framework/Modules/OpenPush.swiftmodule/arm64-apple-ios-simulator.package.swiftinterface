@@ -1,0 +1,493 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 6 -O -enable-experimental-feature DebugDescriptionMacro -module-name OpenPush -package-name openpush_ios -module-alias Module___OpenPush=OpenPush -module-alias Module____StringProcessing=_StringProcessing -module-alias Module____SwiftConcurrencyShims=_SwiftConcurrencyShims -module-alias Module____Concurrency=_Concurrency -module-alias Module___OpenPushCore=OpenPushCore -module-alias Module___UIKit=UIKit -module-alias Module___UserNotifications=UserNotifications -module-alias Module___WebKit=WebKit -module-alias Module___SafariServices=SafariServices -module-alias Module___ActivityKit=ActivityKit -module-alias Module___OpenPushLiveActivities=OpenPushLiveActivities
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Module___ActivityKit
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import Module___OpenPushCore
+@_exported import Module___OpenPushLiveActivities
+import Module___SafariServices
+import Swift
+import Module___UIKit
+import Module___UserNotifications
+import Module___WebKit
+import Module____Concurrency
+import Module____StringProcessing
+import Module____SwiftConcurrencyShims
+public enum OpenPush {
+  public typealias Transport = @Sendable (Foundation.URLRequest, @escaping @Sendable (Swift.Int, Swift.String) -> Swift.Void) -> Swift.Void
+  public static var onLog: @Sendable (Swift.String) -> Swift.Void {
+    get
+    set
+  }
+  public static var onRegistered: @Sendable () -> Swift.Void {
+    get
+    set
+  }
+  public static var onRegistrationFailed: @Sendable (Swift.String) -> Swift.Void {
+    get
+    set
+  }
+  public static var onIdentityVerificationRequired: @Sendable (Swift.String) -> Swift.Void {
+    get
+    set
+  }
+  public static var currentToken: Swift.String? {
+    get
+    @available(*, deprecated, message: "Forward tokens with register(token:) or didRegisterForRemoteNotifications(deviceToken:); assigning a token now registers it.")
+    set
+  }
+  public static func attach(configuration: Module___OpenPushCore.OpenPushConfiguration, credential: @escaping @Sendable () -> Swift.String?, transport: @escaping Module___OpenPush.OpenPush.Transport = urlSessionTransport)
+  public static func hexToken(_ data: Foundation.Data) -> Swift.String
+  public static func register(token: Swift.String)
+  @available(*, deprecated, message: "Call login(externalId:authHash:) for the identity and register(token:) for the token.")
+  public static func register(token: Swift.String, externalID: Swift.String?)
+  public static func receipt(_ type: Swift.String, messageID: Swift.String?, then: (@Sendable () -> Swift.Void)? = nil)
+  public static func messageID(from userInfo: [Swift.AnyHashable : Any]) -> Swift.String?
+  public static func actions(from userInfo: [Swift.AnyHashable : Any]) -> [Module___OpenPushCore.OpenPushPayload.Action]
+  public static func shortToken(_ token: Swift.String) -> Swift.String
+  public static func deviceModel() -> Swift.String
+  public static let urlSessionTransport: @Sendable (_ request: Foundation.URLRequest, _ done: @escaping @Sendable (Swift.Int, Swift.String) -> Swift.Void) -> Swift.Void
+}
+extension Module___OpenPush.OpenPush {
+  public static func trackEvent(_ name: Swift.String, properties: [Swift.String : Any] = [:])
+  public static func trackEvent(_ name: Swift.String, properties: [Swift.String : Any] = [:], idempotencyKey: Swift.String)
+}
+extension Module___OpenPush.OpenPush {
+  public struct PushSubscriptionState : Swift.Sendable, Swift.Equatable {
+    public let id: Swift.String?
+    public let token: Swift.String?
+    public let optedIn: Swift.Bool
+    public let status: Swift.Int?
+    public init(id: Swift.String?, token: Swift.String?, optedIn: Swift.Bool, status: Swift.Int? = nil)
+    public static func == (a: Module___OpenPush.OpenPush.PushSubscriptionState, b: Module___OpenPush.OpenPush.PushSubscriptionState) -> Swift.Bool
+  }
+}
+extension Module___OpenPush.OpenPush {
+  public typealias JSONValue = Module___OpenPushCore.OpenPushJSONValue
+  public typealias Notification = Module___OpenPushCore.OpenPushNotification
+  public struct ClickEvent : Swift.Sendable {
+    public let messageId: Swift.String?
+    public let notification: Module___OpenPush.OpenPush.Notification
+    public let actionId: Swift.String?
+    public let actionURL: Foundation.URL?
+    public let launchURLOpened: Swift.Bool
+    @available(*, deprecated, message: "Use notification.additionalData or notification.rawPayload")
+    public var payload: [Swift.String : Swift.String] {
+      get
+    }
+  }
+  @_hasMissingDesignatedInitializers final public class ForegroundEvent : @unchecked Swift.Sendable {
+    final public let messageId: Swift.String?
+    final public let notification: Module___OpenPush.OpenPush.Notification
+    @available(*, deprecated, message: "Use notification.additionalData or notification.rawPayload")
+    final public var payload: [Swift.String : Swift.String] {
+      get
+    }
+    final public func preventDefault()
+    final public func display()
+    @objc deinit
+  }
+}
+extension Module___OpenPush.OpenPush {
+  public enum IdentityResult : Swift.Sendable, Swift.Equatable {
+    case success
+    case identityRejected(Swift.String)
+    case failed(Swift.String)
+    public static func == (a: Module___OpenPush.OpenPush.IdentityResult, b: Module___OpenPush.OpenPush.IdentityResult) -> Swift.Bool
+  }
+  public static func login(_ externalId: Swift.String)
+  public static func login(externalId: Swift.String, authHash: Swift.String? = nil, completion: (@Sendable (Module___OpenPush.OpenPush.IdentityResult) -> Swift.Void)? = nil)
+  public static func logout(completion: (@Sendable (Module___OpenPush.OpenPush.IdentityResult) -> Swift.Void)? = nil)
+}
+public struct OpenPushInAppMessagesError : Swift.Error, Swift.Sendable {
+  public let message: Swift.String
+  public init(_ message: Swift.String)
+}
+extension Module___OpenPush.OpenPush {
+  public struct InAppMessageLifecycleEvent : Swift.Sendable {
+    public enum Stage : Swift.String, Swift.Sendable {
+      case willDisplay, didDisplay, willDismiss, didDismiss
+      public init?(rawValue: Swift.String)
+      public typealias RawValue = Swift.String
+      public var rawValue: Swift.String {
+        get
+      }
+    }
+    public let messageId: Swift.String
+    public let stage: Module___OpenPush.OpenPush.InAppMessageLifecycleEvent.Stage
+    public let layout: Swift.String
+    public var phase: Swift.String {
+      get
+    }
+  }
+  public struct InAppMessageClickEvent : Swift.Sendable {
+    public let messageId: Swift.String
+    public let actionId: Swift.String?
+    public let url: Swift.String?
+    public let urlTarget: Swift.String?
+    public let closingMessage: Swift.Bool
+    public let firstClick: Swift.Bool
+  }
+  public enum InAppMessages {
+    public static var paused: Swift.Bool {
+      get
+      set
+    }
+    public static func addTrigger(_ key: Swift.String, withValue value: Any)
+    public static func addTriggers(_ values: [Swift.String : Any])
+    public static func removeTrigger(_ key: Swift.String)
+    public static func removeTriggers(_ keys: [Swift.String])
+    public static func clearTriggers()
+    @discardableResult
+    public static func addLifecycleListener(_ listener: @escaping @Sendable (Module___OpenPush.OpenPush.InAppMessageLifecycleEvent) -> Swift.Void) -> Foundation.UUID
+    public static func removeLifecycleListener(_ handle: Foundation.UUID)
+    @discardableResult
+    public static func addClickListener(_ listener: @escaping @Sendable (Module___OpenPush.OpenPush.InAppMessageClickEvent) -> Swift.Void) -> Foundation.UUID
+    public static func removeClickListener(_ handle: Foundation.UUID)
+  }
+}
+extension Module___OpenPush.OpenPush {
+  public static let defaultServerURL: Swift.String
+  public static var isInitialized: Swift.Bool {
+    get
+  }
+  public static let sdkVersion: Swift.String
+  public struct SDKWrapper : Swift.Sendable, Swift.Equatable {
+    public let name: Swift.String
+    public let version: Swift.String
+    public init(name: Swift.String, version: Swift.String)
+    public static func == (a: Module___OpenPush.OpenPush.SDKWrapper, b: Module___OpenPush.OpenPush.SDKWrapper) -> Swift.Bool
+  }
+  public static var wrapper: Module___OpenPush.OpenPush.SDKWrapper? {
+    get
+    set
+  }
+  public static func initialize(_ appId: Swift.String, withLaunchOptions launchOptions: [Swift.AnyHashable : Any]? = nil)
+  public static func initialize(appId: Swift.String, serverURL: Swift.String = OpenPush.defaultServerURL, appGroup: Swift.String? = nil, credential: @escaping @Sendable () -> Swift.String? = { nil }, provisional: Swift.Bool = false, transport: @escaping Module___OpenPush.OpenPush.Transport = urlSessionTransport)
+  public static func initialize(appId: Swift.String, sdkKey: Swift.String, serverURL: Swift.String = OpenPush.defaultServerURL, appGroup: Swift.String? = nil, credential: @escaping @Sendable () -> Swift.String? = { nil }, provisional: Swift.Bool = false, transport: @escaping Module___OpenPush.OpenPush.Transport = urlSessionTransport)
+}
+extension Module___OpenPush.OpenPush.Notifications {
+  public static var openLaunchURLs: Swift.Bool {
+    get
+    set
+  }
+}
+public enum OpenPushLiveActivitiesError : Swift.Error, Swift.Equatable {
+  case invalidActivityType(Swift.String)
+  public static func == (a: Module___OpenPush.OpenPushLiveActivitiesError, b: Module___OpenPush.OpenPushLiveActivitiesError) -> Swift.Bool
+}
+extension Module___OpenPush.OpenPush {
+  public enum LiveActivities {
+    public static let defaultActivityTypeName: Swift.String
+    public static let activitiesEnabledTagKey: Swift.String
+    public static let frequentPushesTagKey: Swift.String
+    public static func derivedActivityType<T>(_ type: T.Type) -> Swift.String
+    public static func recordFrequentPushes(_ enabled: Swift.Bool)
+    public static func enter(_ activityId: Swift.String, withToken token: Swift.String, activityType: Swift.String, completion: (@Sendable (Swift.Bool) -> Swift.Void)? = nil)
+    public static func enter(_ activityId: Swift.String, withToken token: Swift.String, completion: (@Sendable (Swift.Bool) -> Swift.Void)? = nil)
+    public static func exit(_ activityId: Swift.String, completion: (@Sendable (Swift.Bool) -> Swift.Void)? = nil)
+    public static func setPushToStartToken(activityType: Swift.String, token: Swift.String, completion: (@Sendable (Swift.Bool) -> Swift.Void)? = nil)
+    @available(iOS 17.2, *)
+    public static func setPushToStartToken(_ activityType: Swift.String, withToken token: Swift.String) throws
+    @available(iOS 17.2, *)
+    public static func removePushToStartToken(_ activityType: Swift.String) throws
+  }
+}
+@available(iOS 16.1, *)
+extension Module___OpenPush.OpenPush.LiveActivities {
+  public static func setup<T>(_ activityType: T.Type, options: Module___OpenPushLiveActivities.OpenPushLiveActivitySetupOptions? = nil) where T : Module___OpenPushLiveActivities.OpenPushLiveActivityAttributes, T : Swift.Sendable
+  public static func setup<Attributes>(_ type: Attributes.Type, activityType: Swift.String, options: Module___OpenPushLiveActivities.OpenPushLiveActivitySetupOptions? = nil, topicKey: (@Sendable (Attributes) -> Swift.String)?, notificationId: (@Sendable (Attributes.ContentState) -> Swift.String?)?) where Attributes : Module___ActivityKit.ActivityAttributes, Attributes : Swift.Sendable
+  public static func setupDefault(options: Module___OpenPushLiveActivities.OpenPushLiveActivitySetupOptions? = nil)
+  public static func startDefault(_ activityId: Swift.String, attributes: [Swift.String : Any], content: [Swift.String : Any])
+  public static func setup<Attributes>(_ type: Attributes.Type, activityType: Swift.String) where Attributes : Module___ActivityKit.ActivityAttributes, Attributes : Swift.Sendable
+}
+@available(iOS 17.2, *)
+extension Module___OpenPush.OpenPush.LiveActivities {
+  public static func setPushToStartToken<T>(_ activityType: T.Type, withToken token: Swift.String) where T : Module___ActivityKit.ActivityAttributes
+  public static func removePushToStartToken<T>(_ activityType: T.Type) where T : Module___ActivityKit.ActivityAttributes
+}
+extension Module___OpenPush.OpenPush.LiveActivities {
+  @discardableResult
+  public static func trackClickAndReturnOriginal(_ url: Foundation.URL) -> Foundation.URL?
+}
+extension Module___OpenPush.OpenPush {
+  public enum LiveActivityState : Swift.Sendable, Swift.Equatable {
+    case active
+    case ended
+    case dismissed
+    case stale
+    public static func == (a: Module___OpenPush.OpenPush.LiveActivityState, b: Module___OpenPush.OpenPush.LiveActivityState) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+public protocol OpenPushLiveActivityHandle : Swift.Sendable {
+  var appleId: Swift.String { get }
+  var topicKey: Swift.String { get }
+  var currentPushToken: Foundation.Data? { get }
+  func pushTokens() -> Module____Concurrency.AsyncStream<Foundation.Data>
+  func states() -> Module____Concurrency.AsyncStream<Module___OpenPush.OpenPush.LiveActivityState>
+  func notificationIds() -> Module____Concurrency.AsyncStream<Swift.String>
+  func endImmediately() async
+}
+public protocol OpenPushLiveActivitySource : Swift.Sendable {
+  associatedtype Handle : Module___OpenPush.OpenPushLiveActivityHandle
+  func existingActivities() -> [Self.Handle]
+  func activityUpdates() -> Module____Concurrency.AsyncStream<Self.Handle>
+  func pushToStartTokens() -> Module____Concurrency.AsyncStream<Foundation.Data>
+}
+extension Module___OpenPush.OpenPush {
+  public enum PermissionStatus : Swift.Sendable, Swift.Equatable {
+    case notDetermined
+    case denied
+    case granted
+    case provisional
+    case ephemeral
+    public var isGranted: Swift.Bool {
+      get
+    }
+    public static func == (a: Module___OpenPush.OpenPush.PermissionStatus, b: Module___OpenPush.OpenPush.PermissionStatus) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+extension Module___OpenPush.OpenPush {
+  public enum Notifications {
+    public static var permission: Swift.Bool {
+      get
+    }
+    public static var permissionStatus: Module___OpenPush.OpenPush.PermissionStatus {
+      get
+    }
+    public static var canRequestPermission: Swift.Bool {
+      get
+    }
+    public static func requestProvisionalPermission(completion: (@Sendable (Swift.Bool) -> Swift.Void)? = nil)
+    public static func requestPermission(fallbackToSettings: Swift.Bool = false, completion: (@Sendable (Swift.Bool) -> Swift.Void)? = nil)
+  }
+}
+extension Module___OpenPush.OpenPush.Notifications {
+  public static func requestPermission(_ block: @escaping @Sendable (Swift.Bool) -> Swift.Void, fallbackToSettings: Swift.Bool = false)
+  public static func addPermissionObserver(_ observer: @escaping @Sendable (Swift.Bool) -> Swift.Void) -> Foundation.UUID
+  public static func removePermissionObserver(_ id: Foundation.UUID)
+  public static func onAppForegrounded()
+  public static func registerForTokenIfNewlyAuthorized(wasGranted: Swift.Bool)
+  public static func addClickListener(_ listener: @escaping @Sendable (Module___OpenPush.OpenPush.ClickEvent) -> Swift.Void) -> Foundation.UUID
+  public static func removeClickListener(_ id: Foundation.UUID)
+  public static func addForegroundLifecycleListener(_ listener: @escaping @Sendable (Module___OpenPush.OpenPush.ForegroundEvent) -> Swift.Void) -> Foundation.UUID
+  public static func removeForegroundLifecycleListener(_ id: Foundation.UUID)
+  public static func processForeground(_ notification: Module___UserNotifications.UNNotification) -> Module___UserNotifications.UNNotificationPresentationOptions
+  public static func processForeground(_ notification: Module___UserNotifications.UNNotification, completion: @escaping @Sendable (Module___UserNotifications.UNNotificationPresentationOptions) -> Swift.Void)
+  public static func processForeground(userInfo: [Swift.AnyHashable : Any], completion: @escaping @Sendable (Module___UserNotifications.UNNotificationPresentationOptions) -> Swift.Void)
+  public static func clearAll()
+  public static func setBadgeCount(_ count: Swift.Int)
+  public static var badgeCount: Swift.Int? {
+    get
+  }
+  public enum ClickDisposition : Swift.Equatable, Swift.Sendable {
+    case dismissed
+    case open(actionId: Swift.String?)
+    public static func == (a: Module___OpenPush.OpenPush.Notifications.ClickDisposition, b: Module___OpenPush.OpenPush.Notifications.ClickDisposition) -> Swift.Bool
+  }
+  public static func clickDisposition(for identifier: Swift.String) -> Module___OpenPush.OpenPush.Notifications.ClickDisposition
+  public static func processClick(_ response: Module___UserNotifications.UNNotificationResponse)
+  public static func isRepeatClick(_ response: Module___UserNotifications.UNNotificationResponse) -> Swift.Bool
+  public static func recordClick(userInfo: [Swift.AnyHashable : Any]) -> Swift.Bool
+}
+extension Module___OpenPush.OpenPush {
+  public struct PushSubscription : Swift.Sendable {
+    public static var optedIn: Swift.Bool {
+      get
+    }
+    public static func optIn()
+    public static func optOut()
+  }
+}
+extension Module___OpenPush.OpenPush {
+  public struct PushSubscriptionChange : Swift.Sendable, Swift.Equatable {
+    public let previous: Module___OpenPush.OpenPush.PushSubscriptionState?
+    public let current: Module___OpenPush.OpenPush.PushSubscriptionState
+    public init(previous: Module___OpenPush.OpenPush.PushSubscriptionState?, current: Module___OpenPush.OpenPush.PushSubscriptionState)
+    public static func == (a: Module___OpenPush.OpenPush.PushSubscriptionChange, b: Module___OpenPush.OpenPush.PushSubscriptionChange) -> Swift.Bool
+  }
+}
+extension Module___OpenPush.OpenPush.PushSubscription {
+  public var id: Swift.String? {
+    get
+  }
+  public var token: Swift.String? {
+    get
+  }
+  public var status: Swift.Int? {
+    get
+  }
+  public var optedIn: Swift.Bool {
+    get
+  }
+  public func optIn()
+  public func optOut()
+  public static func addObserver(_ observer: @escaping @Sendable (Module___OpenPush.OpenPush.PushSubscriptionState) -> Swift.Void) -> Foundation.UUID
+  public static func removeObserver(_ id: Foundation.UUID)
+  public func addObserver(_ observer: @escaping @Sendable (Module___OpenPush.OpenPush.PushSubscriptionState) -> Swift.Void) -> Foundation.UUID
+  public func removeObserver(_ id: Foundation.UUID)
+  public static func addChangeObserver(_ observer: @escaping @Sendable (Module___OpenPush.OpenPush.PushSubscriptionChange) -> Swift.Void) -> Foundation.UUID
+  public static func removeChangeObserver(_ id: Foundation.UUID)
+  public func addChangeObserver(_ observer: @escaping @Sendable (Module___OpenPush.OpenPush.PushSubscriptionChange) -> Swift.Void) -> Foundation.UUID
+  public func removeChangeObserver(_ id: Foundation.UUID)
+  public func snapshot() -> Module___OpenPush.OpenPush.PushSubscriptionState
+}
+extension Module___OpenPush.OpenPush {
+  public static var pendingReceiptCount: Swift.Int {
+    get
+  }
+}
+extension Module___OpenPush.OpenPush {
+  public static func didRegisterForRemoteNotifications(deviceToken: Foundation.Data)
+  @discardableResult
+  public static func didReceiveRemoteNotification(userInfo: [Swift.AnyHashable : Any]) -> Swift.Bool
+  public static func didFailToRegisterForRemoteNotifications(error: any Swift.Error)
+}
+extension Module___OpenPush.OpenPush {
+  public enum User {
+    public static func addTag(key: Swift.String, value: Swift.String)
+    public static func addTags(_ tags: [Swift.String : Swift.String])
+    public static func removeTag(_ key: Swift.String)
+    public static func getTags() -> [Swift.String : Swift.String]
+    public static func removeTags(_ keys: [Swift.String])
+  }
+}
+extension Module___OpenPush.OpenPush.User {
+  public static var pushSubscription: Module___OpenPush.OpenPush.PushSubscription {
+    get
+  }
+  public static var externalId: Swift.String? {
+    get
+  }
+}
+extension Module___OpenPush.OpenPush.User {
+  public static func addAlias(label: Swift.String, id: Swift.String)
+  public static func addAliases(_ aliases: [Swift.String : Swift.String])
+  public static func removeAlias(_ label: Swift.String)
+  public static func removeAliases(_ labels: [Swift.String])
+}
+extension Module___OpenPush.OpenPush.User {
+  @discardableResult
+  public static func addEmail(_ address: Swift.String) -> Swift.Bool
+  @discardableResult
+  public static func removeEmail(_ address: Swift.String) -> Swift.Bool
+}
+extension Module___OpenPush.OpenPush.User {
+  @discardableResult
+  public static func addSms(_ number: Swift.String) -> Swift.Bool
+  @discardableResult
+  public static func removeSms(_ number: Swift.String) -> Swift.Bool
+  @discardableResult
+  public static func addWhatsApp(_ number: Swift.String) -> Swift.Bool
+  @discardableResult
+  public static func removeWhatsApp(_ number: Swift.String) -> Swift.Bool
+}
+public struct OpenPushVerification : Swift.Sendable, Swift.Equatable {
+  public enum Status : Swift.String, Swift.Sendable, Swift.Equatable, Swift.CaseIterable {
+    case pending
+    case approved
+    case expired
+    case maxAttempts
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [Module___OpenPush.OpenPushVerification.Status]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [Module___OpenPush.OpenPushVerification.Status] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let id: Swift.String
+  public let maskedNumber: Swift.String
+  public let channel: Module___OpenPush.OpenPushVerifyChannel
+  public let status: Module___OpenPush.OpenPushVerification.Status
+  public let attempts: Swift.Int
+  public let expiresAt: Foundation.Date?
+  public static func == (a: Module___OpenPush.OpenPushVerification, b: Module___OpenPush.OpenPushVerification) -> Swift.Bool
+}
+extension Module___OpenPush.OpenPush {
+  public enum Verify {
+    public static func start(_ phone: Swift.String, channel: Module___OpenPush.OpenPushVerifyChannel = .auto, locale: Swift.String? = nil) async throws -> Module___OpenPush.OpenPushVerification
+    public static func check(_ verification: Module___OpenPush.OpenPushVerification, code: Swift.String) async throws -> Module___OpenPush.OpenPushVerification
+    public static func resend(_ verification: Module___OpenPush.OpenPushVerification, channel: Module___OpenPush.OpenPushVerifyChannel) async throws -> Module___OpenPush.OpenPushVerification
+  }
+}
+public enum OpenPushVerifyChannel : Swift.String, Swift.Sendable, Swift.Equatable, Swift.CaseIterable {
+  case auto
+  case sms
+  case whatsapp
+  case call
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [Module___OpenPush.OpenPushVerifyChannel]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [Module___OpenPush.OpenPushVerifyChannel] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct OpenPushVerifyError : Swift.Error, Swift.Sendable, Swift.Equatable, Swift.CustomStringConvertible {
+  public enum Code : Swift.String, Swift.Sendable, Swift.Equatable, Swift.CaseIterable {
+    case rateLimited
+    case tooSoon
+    case notPending
+    case provider
+    case optedOut
+    case noCredit
+    case noRate
+    case refused
+    case invalidNumber
+    case invalidEmail
+    case network
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [Module___OpenPush.OpenPushVerifyError.Code]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [Module___OpenPush.OpenPushVerifyError.Code] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let code: Module___OpenPush.OpenPushVerifyError.Code
+  public let message: Swift.String
+  public init(code: Module___OpenPush.OpenPushVerifyError.Code, message: Swift.String)
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: Module___OpenPush.OpenPushVerifyError, b: Module___OpenPush.OpenPushVerifyError) -> Swift.Bool
+}
+@_spi(OpenPushVoIP) extension Module___OpenPush.OpenPush {
+  @_spi(OpenPushVoIP) public static var voipAppID: Swift.String? {
+    @_spi(OpenPushVoIP) get
+  }
+  @_spi(OpenPushVoIP) public static var voipSandbox: Swift.Bool {
+    @_spi(OpenPushVoIP) get
+  }
+  @_spi(OpenPushVoIP) public static func voipPost(_ path: Swift.String, body: [Swift.String : Any], done: @escaping @Sendable (Swift.Int, Swift.String) -> Swift.Void)
+}
+extension Module___OpenPush.OpenPush.InAppMessageLifecycleEvent.Stage : Swift.Equatable {}
+extension Module___OpenPush.OpenPush.InAppMessageLifecycleEvent.Stage : Swift.Hashable {}
+extension Module___OpenPush.OpenPush.InAppMessageLifecycleEvent.Stage : Swift.RawRepresentable {}
+extension Module___OpenPush.OpenPush.LiveActivityState : Swift.Hashable {}
+extension Module___OpenPush.OpenPush.PermissionStatus : Swift.Hashable {}
+extension Module___OpenPush.OpenPushVerification.Status : Swift.Hashable {}
+extension Module___OpenPush.OpenPushVerification.Status : Swift.RawRepresentable {}
+extension Module___OpenPush.OpenPushVerifyChannel : Swift.Hashable {}
+extension Module___OpenPush.OpenPushVerifyChannel : Swift.RawRepresentable {}
+extension Module___OpenPush.OpenPushVerifyError.Code : Swift.Hashable {}
+extension Module___OpenPush.OpenPushVerifyError.Code : Swift.RawRepresentable {}
